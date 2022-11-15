@@ -1,0 +1,20 @@
+{
+  "productId": "2730272",
+  "globalId": "1005647764",
+  "timestamp": 1668497837176,
+  "locale": "de-DE",
+  "name": "Timeout Product",
+  "lifecycleStatus": "ACTIVE",
+  "mdmCreatedAt": "2021-04-12T08:29:22Z",
+  "mdmUpdatedAt": "2022-08-16T09:26:04Z",
+  "productGroupId": "1395",
+  "manufacturerRefId": "1318",
+  "categories": [
+    "CAT_DE_SAT_2022",
+    "CAT_DE_SAT_796"
+  ],
+  "salesPriceMaintenanceByMarket": true,
+  "_modelVersion": 2,
+  "_docTime": "2022-11-15T07:37:17.193260403Z",
+  "_docUser": null
+}
