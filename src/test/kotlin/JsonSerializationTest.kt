@@ -1,4 +1,5 @@
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.MissingFieldException
 import kotlinx.serialization.Serializable
@@ -22,8 +23,10 @@ class JsonSerializationTest {
 
     @Test
     fun `test for not null de-serialization`() {
-        val person = json.decodeFromString<Person>(File("src/test/resources/non_nullable_weight.json").readText(Charsets.UTF_8))
+        val person =
+            json.decodeFromString<Person>(File("src/test/resources/non_nullable_weight.json").readText(Charsets.UTF_8))
         assertNotNull(person)
+        assertNull(person.age)
     }
 }
 
@@ -31,5 +34,6 @@ class JsonSerializationTest {
 data class Person(
     val name: String,
     val height: Int,
-    val weight: Int
+    val weight: Int, // non nullable - should not allow missing value
+    val age: Int? // nullable - should be null in case of no value
 )
