@@ -37,10 +37,30 @@ class JsonSerializationTest {
     }
 
     @Test
+    fun `test for null de-serialization with array`() {
+        assertThrows<MismatchedInputException> {
+            mapper.readValue(
+                File("src/test/resources/nullable_phone_number.json").readText(Charsets.UTF_8),
+                Person::class.java
+            )
+        }
+    }
+    @Test
+    fun `test for null de-serialization with list`() {
+        assertThrows<MismatchedInputException> {
+            mapper.readValue(
+                File("src/test/resources/nullable_phone_number.json").readText(Charsets.UTF_8),
+                Person::class.java
+            )
+        }
+    }
+
+    @Test
     fun `test for not null de-serialization`() {
+        val jsonText = File("src/test/resources/valid_structure.json").readText(Charsets.UTF_8)
         val person: Person =
             mapper.readValue(
-                File("src/test/resources/non_nullable_weight.json").readText(Charsets.UTF_8),
+                jsonText,
                 Person::class.java
             )
         assertNotNull(person)
@@ -98,5 +118,31 @@ data class Person(
     val fullName: String,
     val height: Int,
     val weight: Int, // non-nullable - should not allow missing value
-    val age: Int? // nullable - should be null in case of no value
-)
+    val age: Int?, // nullable - should be null in case of no value
+    val phoneNumbers: Array<String>,
+    val favouriteSports: List<String>
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Person
+
+        if (fullName != other.fullName) return false
+        if (height != other.height) return false
+        if (weight != other.weight) return false
+        if (age != other.age) return false
+        if (!phoneNumbers.contentEquals(other.phoneNumbers)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = fullName.hashCode()
+        result = 31 * result + height
+        result = 31 * result + weight
+        result = 31 * result + (age ?: 0)
+        result = 31 * result + phoneNumbers.contentHashCode()
+        return result
+    }
+}
